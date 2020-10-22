@@ -4,12 +4,12 @@
   <div class="container mx-auto mt-12">
     <Loader v-if="isLoading" class="image__spinner" />
   </div>
-  <masonry v-if="!isLoading" :cols="{default: 4, 1000: 3, 700: 2, 400: 1}" :gutter="{default: '30px', 700: '15px'}">
+  <masonry class="container mx-auto" v-if="!isLoading" :cols="{default: 4, 1000: 3, 700: 2, 400: 1}" :gutter="{default: '25px', 700: '15px'}">
     <div v-for="(current_image, index) in images" :key="index">
       <SVGFilterImage class="w-full" :src="current_image.url" :duration="1500" />
     </div>
   </masonry>
-  <h3 v-if="totalItems===0 && !isLoading">
+  <h3 class="container mx-auto" v-if="totalItems===0 && !isLoading">
     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 1400 500" enable-background="new 0 0 1400 1400" xml:space="preserve">
 
       <g id="Objects">
