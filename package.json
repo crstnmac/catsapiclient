@@ -14,6 +14,7 @@
     "cube-vue-image-lazy": "^0.4.0",
     "postcss-import": "^13.0.0",
     "tailwindcss": "^1.9.5",
+    "v-lazy-image": "^1.4.0",
     "vee-validate": "^3.4.2",
     "vue": "^2.6.11",
     "vue-masonry": "^0.11.8",
@@ -35,6 +36,7 @@
     "node-sass": "^4.12.0",
     "prettier": "^1.19.1",
     "sass-loader": "^8.0.2",
+    "vue-masonry-css": "^1.0.3",
     "vue-template-compiler": "^2.6.11"
   }
 }

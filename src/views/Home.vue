@@ -1,22 +1,18 @@
 <template>
 <div class="container mx-auto">
-  <autocomplete :search="search" @change="resetPage()" :get-result-value="getResultValue" @submit="onSubmit"></autocomplete>
-  <div class="container mx-auto my-auto">
+  <autocomplete :search="search" placeholder="Search for cats in breeds" :debounce-time="300" :get-result-value="getResultValue" @exit.prevent @focus.prevent @keyup.enter.prevent @submit="onSubmit" @exit="onExit"></autocomplete>
+  <div class=" mx-auto mt-12">
     <Loader v-if="isLoading" class="image__spinner" />
   </div>
 
-  <figure class="container" v-if="!isLoading" v-masonry horizontal-order="true" transition-duration="0.3s" item-selector=".item" gutter="3" fit-width="true">
-
-    <div v-masonry-tile class="item" v-for="(current_image,i) in images" :key="i.id">
-      <div class="max-w-sm rounded overflow-hidden shadow-lg m-4 bg-white">
-        <img class="w-full image__wrapper" :src="current_image.url">
-      </div>
-      <!-- END item -->
+  <masonry v-if="!isLoading" :cols="{default: 4, 1000: 3, 700: 2, 400: 1}" :gutter="{default: '30px', 700: '15px'}">
+    <div v-for="(current_image, index) in images" :key="index">
+      <SVGFilterImage class="w-full" :src="current_image.url" :duration="1500" />
     </div>
+  </masonry>
 
-  </figure>
   <div class="container pt-auto block my-auto">
-    <t-pagination v-show="(isLoaded,!isLoading)" @change="getImages" :total-items="totalItems" :per-page="perPage" :limit="limit" :disabled="isLoading" v-model="page" />
+    <t-pagination v-show="(totalItems>perPage) && !isLoading" @change="getImages" :total-items="totalItems" :per-page="perPage" :limit="limit" :disabled="isLoading" v-model="page" />
   </div>
 </div>
 </template>
@@ -24,12 +20,15 @@
 <script>
 import Autocomplete from '@trevoreyre/autocomplete-vue'
 import Loader from "../components/Loader"
+import SVGFilterImage from "../components/SVGFilterImage";
+
 import axios from "axios";
 export default {
   name: "home",
   components: {
     Autocomplete,
-    Loader
+    Loader,
+    SVGFilterImage
   },
   data() {
     return {
@@ -51,7 +50,7 @@ export default {
       return parseInt(this.pagination_count)
     }
   },
-  created() {
+  beforeMount() {
     this.getBreeds();
     this.isLoading = false
   },
@@ -60,11 +59,14 @@ export default {
       console.log(this.selected_breed)
       this.getImages();
     },
-    page() {
-      this.getImages()
+    search() {
+      this.page
     }
   },
   methods: {
+    onExit() {
+      return []
+    },
     search(input) {
       if (input.length < 1) {
         return []
@@ -102,15 +104,18 @@ export default {
 
       let response = await axios.get('https://api.thecatapi.com/v1/images/search', {
         params: query_params
+      }).then((result) => {
+        this.isLoading = false,
+          this.isLoaded = false
+        this.pagination_count = result.headers['pagination-count'];
+
+        return result
       })
 
-      this.pagination_count = response.headers['pagination-count'];
       this.images = response.data
       this.current_image = this.images[0]
-      this.isLoading = false
-
-      this.isLoaded = true
       console.log(this.images.length)
+      console.log(this.pagination_count)
 
     }
 
