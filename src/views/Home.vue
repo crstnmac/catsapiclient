@@ -2,6 +2,12 @@
 <div class="container mx-auto">
   <autocomplete :search="search" placeholder="Search for cats" :debounce-time="300" :get-result-value="getResultValue" @exit.prevent @focus.prevent @keyup.enter.prevent @submit="onSubmit" @exit="onExit"></autocomplete>
   <div class="container mx-auto mt-12">
+    <h3 class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10">
+      {{breed_name}}
+    </h3>
+  </div>
+
+  <div class="container mx-auto mt-6">
     <Loader v-if="isLoading" class="image__spinner" />
   </div>
   <masonry class="container mx-auto" v-if="!isLoading" :cols="{default: 4, 1000: 3, 700: 2, 400: 1}" :gutter="{default: '25px', 700: '15px'}">
@@ -84,6 +90,7 @@ export default {
       images: [],
       breeds: {},
       selected_breed: {},
+      breed_name: "",
       current_image: {},
       pagination_count: 0,
       perPage: 8,
@@ -138,6 +145,7 @@ export default {
     },
     onSubmit(result) {
       this.selected_breed = result.id
+      this.breed_name = result.name
       this.breed_ids = this.selected_breed
       // console.log(this.breed_ids)
     },

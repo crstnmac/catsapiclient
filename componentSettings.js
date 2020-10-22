@@ -243,14 +243,13 @@ const componentSettings = {
     }
   },
   TTag: {
-    fixedClasses: '',
     classes: '',
     variants: {
-      title: 'text-2xl leading-8 font-extrabold text-gray-900 tracking-tight',
-      subtitle: 'text-lg leading-6 font-medium text-gray-900',
-      error: 'text-red-500',
-      badge: 'inline-flex items-center px-3 rounded-full text-xs font-medium leading-4 bg-gray-100 text-gray-800',
-      avatar: 'inline-flex items-center justify-center h-10 w-10 rounded-full bg-gray-500 overflow-hidden leading-none text-center'
+      heading: 'text-2xl leading-8 font-semibold tracking-tight font-display text-gray-900 sm:text-3xl sm:leading-9',
+      body: 'mt-2 text-base leading-6 text-gray-500',
+      subtitle: 'text-base leading-6 text-indigo-600 font-semibold tracking-wide uppercase',
+      badge: 'px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800',
+      link: 'text-indigo-600 hover:text-indigo-900 underline'
     }
   },
   TToggle: {
