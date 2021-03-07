@@ -1,23 +1,22 @@
 <template>
-<div id="app">
-  <div id="nav">
+  <div id="app">
+    <div id="nav"></div>
+    <router-view />
   </div>
-  <router-view />
-</div>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      path: this.$route && this.$route.path
-    };
+      path: this.$route && this.$route.path,
+    }
   },
   watch: {
     $route(route) {
-      this.path = route.path;
-    }
-  }
+      this.path = route.path
+    },
+  },
 }
 </script>
 
@@ -27,7 +26,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #2682dd;
 }
 
 #nav {
